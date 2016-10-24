@@ -35,6 +35,11 @@ class UploadImage implements ShouldQueue
     {
         $path = storage_path() . '/' . config('filesistem.temp_path') . '/' . $this->fileId;
         $fileName = 'channels/' . $this->fileId . '.png';
+
+        \Image::make($path)->encode('png')->fit(40, 40, function($c) {
+            $c->upsize();
+        })->save();
+
         if (\Storage::put($fileName, fopen($path, 'r+'))) {
             \File::delete($path);
             $this->channel->update([

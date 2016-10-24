@@ -31,7 +31,6 @@ class ChannelSettingsController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image->move(storage_path() . '/' . config('filesistem.temp_path'), $fileId = uniqid(true));
-            //dd($request->file('image')->getClientOriginalExtension());
 
             $this->dispatch(new UploadImage($channel, $fileId));
         }
