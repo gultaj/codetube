@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Channel;
 use App\Http\Requests;
 use App\Http\Requests\ChannelUpdateRequest;
+use App\Jobs\UploadImage;
 
 class ChannelSettingsController extends Controller
 {
@@ -26,6 +27,14 @@ class ChannelSettingsController extends Controller
             'slug' => $request->slug,
             'description' => $request->description
         ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image->move(storage_path() . '/' . config('filesistem.temp_path'), $fileId = uniqid(true));
+            //dd($request->file('image')->getClientOriginalExtension());
+
+            $this->dispatch(new UploadImage($channel, $fileId));
+        }
 
         return redirect()->to("/channel/{$channel->slug}/edit");
     }
