@@ -18,6 +18,14 @@
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
+
+        window.codetube = {
+            home_url: '{{ config("app.url") }}',
+            user: {
+                id: {{ Auth::check() ? Auth::user()->id : null }},
+                authenticated: {{ Auth::check() ? 'true' : 'false' }}
+            }
+        }
     </script>
 </head>
 <body>

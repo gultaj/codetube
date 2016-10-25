@@ -6,6 +6,7 @@
                     <div class="panel-heading">Upload</div>
 
                     <div class="panel-body">
+                        <div class="alert alert-danger" v-if="failed">Something went wrong!</div>
                         <div class="form-group" v-if="!uploading">
                             <label for="title" class="col-md-3 text-right control-label">Video file</label>
                             <div class="col-md-9">
@@ -13,7 +14,17 @@
                             </div>
                         </div>
                                             
-                        <div class="video-form form-horizontal" v-if="uploading && !failed">                            
+                        <div class="video-form form-horizontal" v-if="uploading && !failed">     
+                            <div class="alert alert-info" v-if="!uploadingComplete">
+                                Your video will be available at 
+                                <a :href="video_url" target="_blank">{{ video_url }}</a>
+                            </div>
+                            <div class="alert alert-success" v-if="uploadingComplete">
+                                Upload complete. Video is now processing. <a href="/videos">Go to your videos</a>
+                            </div>
+                            <div class="progress" v-if="!uploadingComplete">
+                                <div class="progress-bar" :style="{width: fileProgress + '%'}"></div>
+                            </div>                       
                             <div class="form-group">
                                 <label for="title" class="col-md-3 control-label">Title</label>
                                 <div class="col-md-9">
@@ -37,11 +48,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-9 col-md-offset-3">
+                                <div class="col-md-3 help-block text-right">{{ saveStatus }}</div>
+                                <div class="col-md-9">
                                     <button type="submit" class="btn btn-primary" @click.prevent="update">Save changes</button>
-                                    <span class="help-block pull-right">{{ saveStatus }}</span>
-                                </div>
-                                
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -62,8 +72,14 @@
                 title: 'Untitled',
                 description: null,
                 visibility: 'private',
-                saveStatus: null
+                saveStatus: null,
+                fileProgress: 0
             };
+        },
+        computed: {
+            video_url() {
+                return this.$root.home_url + '/videos/' + this.uid;
+            }
         },
         methods: {
             fileInputChange() {
@@ -73,7 +89,22 @@
                 this.file = document.getElementById('video').files[0];
 
                 this.store().then(() => {
-                    //
+                    var form = new FormData();
+                    form.append('video', this.file);
+                    form.append('uid', this.uid);
+                    this.$http.post('/videos/upload', form, {
+                        progress: (e) => {
+                            if (e.lengthComputable) {
+                                this.updateProgress(e);
+                            }
+                        }
+                    }).then(() => {
+                        this.uploadingComplete = true;
+                    }, () => {
+                        this.failed = true;
+                    });
+                }, () => {
+                    this.failed = true;
                 });
             },
             store() {
@@ -102,6 +133,9 @@
                 }).catch(error => {
                     this.saveStatus = 'Fail to saved changes';
                 });
+            },
+            updateProgress(e) {
+                this.fileProgress = e.loaded / e.total * 100;
             }
         }
     }
