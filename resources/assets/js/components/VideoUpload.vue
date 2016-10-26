@@ -85,7 +85,6 @@
             fileInputChange() {
                 this.uploading = true;
                 this.failed = false;
-
                 this.file = document.getElementById('video').files[0];
 
                 this.store().then(() => {
@@ -94,18 +93,11 @@
                     form.append('uid', this.uid);
                     this.$http.post('/videos/upload', form, {
                         progress: (e) => {
-                            if (e.lengthComputable) {
-                                this.updateProgress(e);
-                            }
+                            if (e.lengthComputable) this.updateProgress(e);
                         }
-                    }).then(() => {
-                        this.uploadingComplete = true;
-                    }, () => {
-                        this.failed = true;
-                    });
-                }, () => {
-                    this.failed = true;
-                });
+                    }).then(() => {this.uploadingComplete = true;
+                    }, () => {this.failed = true;});
+                }, () => {this.failed = true;});
             },
             store() {
                 return this.$http.post('/videos', {
@@ -126,7 +118,6 @@
                 }).then((response) => response.json())
                 .then(result => {
                     this.saveStatus = 'Changes saved';
-
                     setTimeout(() => {
                         this.saveStatus = null;
                     }, 3000);
@@ -137,6 +128,15 @@
             updateProgress(e) {
                 this.fileProgress = e.loaded / e.total * 100;
             }
+        },
+        mounted() {
+            window.onbeforeunload = (e) => {
+                if (this.uploading && !this.uploadingComplete && !this.failed) {
+                    const text = 'Are you sure you want to navigate away?';
+                    e.returnValue = text;
+                    return text;
+                }
+            };
         }
     }
 </script>
