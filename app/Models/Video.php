@@ -11,7 +11,7 @@ class Video extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'title', 'description', 'uid', 'video_id', 'video_filename', 'processed', 
+        'title', 'description', 'uid', 'video_processed', 'video_filename', 'processed', 
         'visibility', 'allow_votes', 'allow_comments', 'processed_percentage',
     ];
 

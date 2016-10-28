@@ -13,7 +13,7 @@ class UploadVideo implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    public $video_filename;
+    public $video;
 
     /**
      * Create a new job instance.
@@ -32,15 +32,18 @@ class UploadVideo implements ShouldQueue
      */
     public function handle()
     {
-        $path = storage_path() . '/' . config('filesistem.temp_path') . '/' . $this->video->video_filename;
-        $fileName = 'videos/' . $this->video->video_filename;
+        $moveFile = function($keyName, $folderName) {
+            $path = storage_path() . '/' . config('filesystems.temp_path') . '/' . $this->video->$keyName;
+            $fileName = "{$folderName}{$this->video->$keyName}";
 
-        if (\Storage::put($fileName, fopen($path, 'r+'))) {
-            \File::delete($path);
-            $this->video->update([
-                'video_filename' => $fileName
-            ]);
-            dispatch(new TranscodeVideo($video));
-        }
+            if (\Storage::put($fileName, fopen($path, 'r+'))) {
+                \File::delete($path);
+                $this->video->update([$keyName => $fileName]);
+            }
+        };
+
+        $moveFile('video_filename', '/video/original/');
+        $moveFile('video_processed', '/video/');
     }
+
 }

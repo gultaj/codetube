@@ -30,9 +30,9 @@ class ChannelSettingsController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $image->move(storage_path() . '/' . config('filesistem.temp_path'), $fileId = uniqid(true));
+            $image->move(storage_path() . '/' . config('filesystems.temp_path'), $fileId = uniqid(true));
 
-            $this->dispatch(new UploadImage($channel, $fileId));
+            dispatch(new UploadImage($channel, $fileId));
         }
 
         return redirect()->to("/channel/{$channel->slug}/edit");
