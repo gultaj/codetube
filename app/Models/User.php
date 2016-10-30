@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Channel;
+use App\Models\Video;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -31,5 +32,10 @@ class User extends Authenticatable
     public function channel()
     {
         return $this->hasMany(Channel::class);
+    }
+
+    public function videos()
+    {
+        return $this->hasManyThrough(Video::class, Channel::class);
     }
 }

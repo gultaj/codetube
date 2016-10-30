@@ -24,4 +24,18 @@ class Video extends Model
     {
         return 'uid';
     }
+
+    public function scopeLatestFirst($query)
+    {
+        return $query->orderBy('created_at', 'desc');
+    }
+
+    public function getThumbnail()
+    {
+        if (!$this->processed) {
+            return config('codetube.default_thumb');
+        }
+
+        return $this->thumb;
+    }
 }

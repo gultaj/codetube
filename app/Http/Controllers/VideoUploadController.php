@@ -10,7 +10,7 @@ class VideoUploadController extends Controller
 {
     public function index()
     {
-        return view('videos.upload');
+        return view('video.upload');
     }
 
     public function store(Request $request)
@@ -22,14 +22,6 @@ class VideoUploadController extends Controller
 
         dispatch(new TranscodeVideo($video)); 
 
-        //  $ffmpeg = \FFMpeg\FFMpeg::create(['timeout' => 0]);
-        //  $video_file = $ffmpeg->open(storage_path() . "/uploads/{$video->video_filename}");
-        //  $format = new \FFMpeg\Format\Video\X264('libmp3lame', 'libx264');
-        //  $format->on('progress', function($file, $_format, $percentage) {
-             
-        //     dd($file->getFFProbe());
-        //  });
-        //  $video_file->save($format, storage_path() . "/uploads/{$video->video_filename}-x264.mp4");
         return response()->json(null, 200);
     }
 }
