@@ -32,7 +32,7 @@ class Video extends Model
 
     public function getThumbnail()
     {
-        if (!$this->processed) {
+        if (!$this->processed || is_null($this->thumb)) {
             return config('codetube.default_thumb');
         }
 
