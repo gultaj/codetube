@@ -19,7 +19,7 @@ class VideoController extends Controller
     public function edit(Video $video)
     {
         $this->authorize('update', $video);
-        
+
         return view('video.edit', [
             'video' => $video
         ]);
@@ -64,6 +64,15 @@ class VideoController extends Controller
         if ($request->ajax()) {
             return response()->json(null, 200);
         }
+
+        return redirect()->back();
+    }
+
+    public function delete(Video $video)
+    {
+        $this->authorize('update', $video);
+
+        $video->delete();
 
         return redirect()->back();
     }

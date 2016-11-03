@@ -29,8 +29,12 @@
                                                             <span>{{ $video->created_at->toDateTimeString() }}</span>
                                                         @endif
                                                     </p>
-                                                    <form action="">
-                                                        <a href="{{ route('video.edit', ['video' => $video->uid]) }}" class="btn btn-default btn-xs">Edit</a>                                                    
+                                                    <form action="{{ route('video.delete', ['video' => $video->uid]) }}" method="post">
+                                                        <a href="{{ route('video.edit', ['video' => $video->uid]) }}" class="btn btn-default btn-xs">Edit</a>
+                                                        <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+                                                        
+                                                        {{ csrf_field() }}                                                    
+                                                        {{ method_field('DELETE') }}                                                    
                                                     </form>
                                                 </div>
                                                 <div class="col-sm-6">{{ ucfirst($video->visibility) }}</div>
