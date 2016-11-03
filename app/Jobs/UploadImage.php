@@ -33,7 +33,7 @@ class UploadImage implements ShouldQueue
      */
     public function handle()
     {
-        $path = storage_path() . '/' . config('filesistem.temp_path') . '/' . $this->fileId;
+        $path = storage_path() . '/' . config('filesystems.temp_path') . '/' . $this->fileId;
         $fileName = "/channels/{$this->fileId}.png";
 
         \Image::make($path)->encode('png')->fit(40, 40, function($c) {

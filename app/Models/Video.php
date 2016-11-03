@@ -12,7 +12,7 @@ class Video extends Model
 
     protected $fillable = [
         'title', 'description', 'uid', 'video_processed', 'video_filename', 'processed', 
-        'visibility', 'allow_votes', 'allow_comments', 'processed_percentage',
+        'visibility', 'allow_votes', 'allow_comments', 'processed_percentage', 'thumbnail',
     ];
 
     public function channel()
@@ -30,12 +30,12 @@ class Video extends Model
         return $query->orderBy('created_at', 'desc');
     }
 
-    public function getThumbnail()
+    public function getThumbnailAttribute($value)
     {
-        if (!$this->processed || is_null($this->thumb)) {
+        if (!$this->processed || is_null($value)) {
             return config('codetube.default_thumb');
         }
 
-        return $this->thumb;
+        return '/storage/' . $value;
     }
 }

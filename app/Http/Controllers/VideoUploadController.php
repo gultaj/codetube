@@ -20,6 +20,12 @@ class VideoUploadController extends Controller
 
         $request->file('video')->move(storage_path() . '/' . config('filesystems.temp_path'), $video->video_filename);
 
+        // $path = storage_path()  . '/' . config('filesystems.temp_path') . '/';
+        // $ffmpeg = \FFMpeg\FFMpeg::create(['timeout' => 0]);
+        // $v = $ffmpeg->open($path . $video->video_filename);
+
+        // dd($v->getFormat()->get('duration'));
+
         dispatch(new TranscodeVideo($video)); 
 
         return response()->json(null, 200);

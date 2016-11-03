@@ -8,6 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Video;
 use App\Jobs\UploadVideo;
+use App\Jobs\UploadThumbnail;
 
 class TranscodeVideo implements ShouldQueue
 {
@@ -35,7 +36,18 @@ class TranscodeVideo implements ShouldQueue
 
         $ffmpeg = \FFMpeg\FFMpeg::create(['timeout' => 0]);
         $video = $ffmpeg->open($path . $this->video->video_filename);
-        //$video->frame(FFMpeg\Coordinate\TimeCode::fromSeconds(20))->save()
+        
+        $seconds = intval($video->getFormat()->get('duration') / 2);
+        $frame = $video->frame(\FFMpeg\Coordinate\TimeCode::fromSeconds($seconds));
+        $thumbnail_filename = "{$this->video->video_filename}.jpg";
+        $frame->save($path . $thumbnail_filename, true);
+
+        $this->video->update([
+            'thumbnail' => $thumbnail_filename
+        ]);
+
+        dispatch(new UploadThumbnail($this->video));
+
         $format = new \FFMpeg\Format\Video\X264('libmp3lame', 'libx264');
 
         $format->on('progress', function($file, $format, $percentage) {
@@ -51,5 +63,6 @@ class TranscodeVideo implements ShouldQueue
         ]);
 
         dispatch(new UploadVideo($this->video));
+        
     }
 }

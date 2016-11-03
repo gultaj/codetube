@@ -26,6 +26,7 @@ class CreateVideosTable extends Migration
             $table->boolean('allow_votes')->default(false);
             $table->boolean('allow_comments')->default(false);
             $table->integer('processed_percentage')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

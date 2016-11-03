@@ -15,7 +15,7 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <a href="{{ route('video', ['video' => $video->uid]) }}">
-                                                <img src="{{ asset($video->getThumbnail()) }}" alt="" class="img-responsive">
+                                                <img src="{{ asset($video->thumbnail) }}" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="col-sm-9">
