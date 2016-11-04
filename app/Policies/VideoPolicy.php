@@ -14,4 +14,9 @@ class VideoPolicy
     {
         return $user->id === $video->channel->user_id;
     }
+
+    public function view(User $user, Video $video)
+    {
+        return !$video->is_private; //
+    }
 }

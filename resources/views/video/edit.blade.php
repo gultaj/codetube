@@ -24,9 +24,7 @@
                             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                                 <label for="description" class="col-md-3 control-label">Description</label>
                                 <div class="col-md-9">
-                                    <textarea name="description" id="description" class="form-control">
-                                        {{ old('description') ?: $video->description }}
-                                    </textarea>
+                                    <textarea name="description" id="description" class="form-control">{{ old('description') ?: $video->description }}</textarea>
                                     @if ($errors->has('description'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('description') }}</strong>

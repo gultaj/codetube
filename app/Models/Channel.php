@@ -26,4 +26,13 @@ class Channel extends Model
     {
         return 'slug';
     }
+
+    public function getThumbnailAttribute()
+    {
+        if (is_null($this->image_filename)) {
+            return config('codetube.channel.default_thumb');
+        }
+
+        return '/storage/' . $this->image_filename;
+    }
 }

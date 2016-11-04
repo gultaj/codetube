@@ -33,9 +33,19 @@ class Video extends Model
     public function getThumbnailAttribute($value)
     {
         if (!$this->processed || is_null($value)) {
-            return config('codetube.default_thumb');
+            return config('codetube.video.default_thumb');
         }
 
         return '/storage/' . $value;
+    }
+
+    public function getIsPrivateAttribute()
+    {
+        return $this->visibility === 'private';
+    }
+
+    public function getIsOwnerAttribute()
+    {
+        return $this->channel->user_id === \Auth::user()->id;
     }
 }

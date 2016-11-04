@@ -25,9 +25,11 @@ class VideoController extends Controller
         ]);
     }
 
-    public function view(Request $request, Video $video)
+    public function view(Video $video)
     {
-        
+        return view('video.view', [
+            'video' => $video
+        ]);
     }
 
     public function store(Request $request)
