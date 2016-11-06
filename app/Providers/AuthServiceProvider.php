@@ -13,8 +13,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        App\Models\Channel::class => App\Policies\ChannelPolicy::class,
-        App\Models\Video::class => App\Policies\VideoPolicy::class,
+        \App\Models\Channel::class => \App\Policies\ChannelPolicy::class,
+        \App\Models\Video::class => \App\Policies\VideoPolicy::class,
     ];
 
     /**
@@ -22,9 +22,9 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Gate $gate)
     {
-        $this->registerPolicies();
+        $this->registerPolicies($gate);
 
         //
     }

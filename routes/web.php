@@ -9,7 +9,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 
-Route::get('/videos/{video}', 'VideoController@view')->name('video')->middleware('can:view,video');
+Route::get('/videos/{video}', 'VideoController@view')->name('video');
 Route::get('/channel/{channel}', 'ChannelController@view')->name('channel');
 
 Route::group(['middleware' => ['auth']], function() {

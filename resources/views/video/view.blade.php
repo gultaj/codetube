@@ -9,8 +9,18 @@
                     <div class="alert alert-info">Your video is currently private. Only you can see it.</div>
                 @endif
 
-                @if ($video->processed)
-                    Show video player
+                @if ($video->processed && $video->can_view)
+                    Show video player {!!$video->can_view!!}
+                @endif
+                
+                @if (!$video->processed)
+                    <div class="video-placeholder">
+                        <div class="video-placeholder__header">This video is processing. Come back a bit later.</div>
+                    </div>
+                @elseif (!$video->can_view)
+                    <div class="video-placeholder">
+                        <div class="video-placeholder__header">This video is private</div>
+                    </div>
                 @endif
 
                 <div class="panel panel-default">

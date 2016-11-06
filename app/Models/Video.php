@@ -46,6 +46,15 @@ class Video extends Model
 
     public function getIsOwnerAttribute()
     {
-        return $this->channel->user_id === \Auth::user()->id;
+        return \Auth::check() && $this->channel->user_id === \Auth::user()->id;
+    }
+
+    public function getCanViewAttribute()
+    {
+        //if (!\Auth::user() && $this->is_private) return false;
+
+        if ($this->is_private && !$this->is_owner) return false;
+
+        return true;
     }
 }
