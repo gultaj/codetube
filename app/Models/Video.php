@@ -36,7 +36,12 @@ class Video extends Model
             return config('codetube.video.default_thumb');
         }
 
-        return '/storage/' . $value;
+        return $value;
+    }
+
+    public function getThumbnailUrlAttribute()
+    {
+        return asset('/storage' . $this->thumbnail);
     }
 
     public function getIsPrivateAttribute()
@@ -56,5 +61,10 @@ class Video extends Model
         if ($this->is_private && !$this->is_owner) return false;
 
         return true;
+    }
+
+    public function getUrlAttribute()
+    {
+        return "/storage{$this->video_processed}";
     }
 }

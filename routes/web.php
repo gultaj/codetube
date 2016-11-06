@@ -21,7 +21,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/videos/{video}/edit', 'VideoController@edit')->name('video.edit');
 
-    Route::get('/videos/upload', 'VideoUploadController@index')->name('videos.upload');
+    Route::get('/upload', 'VideoUploadController@index')->name('videos.upload');
     Route::post('/videos/upload', 'VideoUploadController@store')->name('videos.upload.store');
     
     Route::get('/channel/{channel}/edit', 'ChannelSettingsController@edit');

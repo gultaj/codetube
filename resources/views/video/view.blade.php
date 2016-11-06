@@ -10,7 +10,9 @@
                 @endif
 
                 @if ($video->processed && $video->can_view)
-                    Show video player {!!$video->can_view!!}
+                    <video-player video-uid="{{ $video->uid }}"
+                        video-url="{{ $video->url }}"
+                        thumbnail-url="{{ $video->thumbnail_url }}"></video-player>
                 @endif
                 
                 @if (!$video->processed)

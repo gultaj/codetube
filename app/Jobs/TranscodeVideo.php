@@ -36,10 +36,12 @@ class TranscodeVideo implements ShouldQueue
 
         $ffmpeg = \FFMpeg\FFMpeg::create(['timeout' => 0]);
         $video = $ffmpeg->open($path . $this->video->video_filename);
+
+        $name = pathinfo($path . $this->video->video_filename, PATHINFO_FILENAME);
         
         $seconds = intval($video->getFormat()->get('duration') / 2);
         $frame = $video->frame(\FFMpeg\Coordinate\TimeCode::fromSeconds($seconds));
-        $thumbnail_filename = "{$this->video->video_filename}.jpg";
+        $thumbnail_filename = "{$name}.jpg";
         $frame->save($path . $thumbnail_filename, true);
 
         $this->video->update([
@@ -53,7 +55,7 @@ class TranscodeVideo implements ShouldQueue
         $format->on('progress', function($file, $format, $percentage) {
             $this->video->update(['processed_percentage' => $percentage]);
         });
-        $transcoded_filename = "{$this->video->video_filename}-x264.mp4";
+        $transcoded_filename = "{$name}-x264.mp4";
         $video->save($format, $path . $transcoded_filename);
 
         $this->video->update([

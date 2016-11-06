@@ -34,7 +34,7 @@ class UploadThumbnail implements ShouldQueue
         $input_file = $path . $this->video->thumbnail;
         $filename = pathinfo($input_file, PATHINFO_FILENAME);
         $output_file = "/video/thumb/{$filename}.png";
-
+        \Log::info('input_file: ' . $input_file);
         \Image::make($input_file)->encode('png')->save();
 
         if (\Storage::put($output_file, fopen($input_file, 'r+'))) {
