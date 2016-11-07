@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Channel;
+use App\Models\VideoView;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,6 +19,11 @@ class Video extends Model
     public function channel()
     {
         return $this->belongsTo(Channel::class);
+    }
+
+    public function views()
+    {
+        return $this->hasMany(VideoView::class);
     }
 
     public function getRouteKeyName()
@@ -66,5 +72,10 @@ class Video extends Model
     public function getUrlAttribute()
     {
         return "/storage{$this->video_processed}";
+    }
+
+    public function getViewCountAttribute()
+    {
+        return $this->views->count();
     }
 }

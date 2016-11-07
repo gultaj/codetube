@@ -9,8 +9,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 
-Route::get('/videos/{video}', 'VideoController@view')->name('video');
 Route::get('/channel/{channel}', 'ChannelController@view')->name('channel');
+Route::get('/videos/{video}', 'VideoController@view')->name('video');
+Route::post('/videos/{video}/view', 'VideoViewController@store');
 
 Route::group(['middleware' => ['auth']], function() {
 
