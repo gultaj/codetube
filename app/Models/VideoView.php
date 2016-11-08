@@ -18,6 +18,12 @@ class VideoView extends Model
     {
         return $query->where('user_id', $user->id);
     }
+
+    public function scopeLatestByIp($query, $ip) 
+    {
+        return $query->where('ip', $ip)->orderBy('created_at', 'desc')->take(1);
+    }
+
 }
 
 

@@ -28,7 +28,11 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h4>{{ $video->title }}</h4>
-                        <div class="pull-right">Video views</div>
+                        <div class="pull-right">
+                            <div class="video__views">
+                                {{ $video->view_count }} {{ str_plural('view', $video->view_count) }}
+                            </div>
+                        </div>
                         <div class="media">
                             <div class="media-left">
                                 <a href="{{ route('channel', ['channel' => $video->channel->slug]) }}">
