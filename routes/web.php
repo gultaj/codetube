@@ -6,12 +6,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/channel/{channel}', 'ChannelController@view')->name('channel');
 Route::get('/videos/{video}', 'VideoController@view')->name('video');
 Route::post('/videos/{video}/view', 'VideoViewController@store');
+
+Route::get('/search', 'SearchController@index')->name('search');
 
 Route::group(['middleware' => ['auth']], function() {
 

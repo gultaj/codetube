@@ -5,9 +5,12 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Channel extends Model
 {
+    use Searchable;
+
     protected $fillable = [
         'name', 'slug', 'description', 'image_filename'        
     ];
@@ -33,6 +36,11 @@ class Channel extends Model
             return config('codetube.channel.default_thumb');
         }
 
-        return '/storage/' . $this->image_filename;
+        return $this->image_filename;
+    }
+
+    public function getThumbnailUrlAttribute()
+    {
+        return asset('/storage' . $this->thumbnail);
     }
 }

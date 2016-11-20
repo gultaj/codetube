@@ -5,7 +5,7 @@ return [
         'default_thumb' => '/video/thumb/default_thumbnail.png',
     ],
     'channel' => [
-        'default_thumb' => ''
+        'default_thumb' => '/channels/default_thumbnail.png',
     ]
 
 ];
