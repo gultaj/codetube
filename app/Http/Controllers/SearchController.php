@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Models\Channel;
+use App\Models\Video;
 
 class SearchController extends Controller
 {
@@ -16,9 +17,13 @@ class SearchController extends Controller
         }
 
         $channels = Channel::search($request->q)->take(2)->get();
+        $videos = Video::search($request->q)->take(4)->get();
+
+        $videos->load('channel', 'views');
 
         return view('search.index',[
-            'channels' => $channels
+            'channels' => $channels,
+            'videos' => $videos,
         ]);
     }
 }

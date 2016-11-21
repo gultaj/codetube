@@ -25,7 +25,17 @@
                                 @endforeach
                             </div>
                         @else
-                            No results found
+                            No channels found
+                        @endif
+                        @if ($videos->count())
+                            <h4>Videos</h4>
+                            <div class="well">
+                                @foreach ($videos as $video)
+                                    @include('video.partials._search', ['video' => $video]);
+                                @endforeach
+                            </div>
+                        @else
+                            No videos found
                         @endif
                     </div>
                 </div>

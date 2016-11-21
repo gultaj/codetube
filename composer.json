@@ -10,7 +10,8 @@
         "intervention/image": "^2.3",
         "php-ffmpeg/php-ffmpeg": "^0.6.1",
         "laravel/scout": "^1.1",
-        "algolia/algoliasearch-client-php": "^1.11"
+        "algolia/algoliasearch-client-php": "^1.11",
+        "barryvdh/laravel-debugbar": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
