@@ -32,11 +32,12 @@
                             <div class="video__views">
                                 {{ $video->view_count }} {{ str_plural('view', $video->view_count) }}
                             </div>
+                            <video-voting video-uid="{{ $video->uid }}"></video-voting>
                         </div>
                         <div class="media">
                             <div class="media-left">
                                 <a href="{{ route('channel', ['channel' => $video->channel->slug]) }}">
-                                    <img class="media-object" src="{{ url($video->channel->thumbnail) }}" alt="">                                    
+                                    <img class="media-object" src="{{ url($video->channel->thumbnail_url) }}" alt="">                                    
                                 </a>
                             </div>
                             <div class="media-body">

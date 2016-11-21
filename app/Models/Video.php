@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Channel;
+use App\Models\Vote;
 use App\Models\VideoView;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,6 +26,21 @@ class Video extends Model
     public function views()
     {
         return $this->hasMany(VideoView::class);
+    }
+
+    public function votes()
+    {
+        return $this->morphMany(Vote::class, 'voteable');
+    }
+
+    public function upVotes()
+    {
+        return $this->votes()->where('type', 'up');
+    }
+    
+    public function downVotes()
+    {
+        return $this->votes()->where('type', 'down');
     }
 
     public function getRouteKeyName()
@@ -78,5 +94,18 @@ class Video extends Model
     public function getViewCountAttribute()
     {
         return $this->views->count();
+    }
+
+    public function voteByUser()
+    {
+        return $this->votes()->where('user_id', \Auth::user()->id);
+    }
+
+    public function getUserVoteTypeAttribute()
+    {
+        if ($vote = $this->voteByUser()->first()) {
+            return $vote->type;
+        }
+        return null;
     }
 }
