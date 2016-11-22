@@ -22,6 +22,9 @@
 
                     <ul class="list-inline" v-if="$root.user.authenticated">
                         <li><a href="#" @click.prevent="toggleReplyForm(comment.id)">Reply</a></li>
+                        <li v-if="$root.user.id === comment.user_id">
+                            <a href="#" class="text-danger" @click.prevent="deleteComment(comment.id)">Delete</a>
+                        </li>
                     </ul>
 
                     <div class="video-comment clearfix" v-if="replyFormVisible === comment.id">
@@ -41,6 +44,11 @@
                             <div class="media-body">
                                 <a :href="reply.channel.data.url">{{ reply.channel.data.name }}</a> {{ reply.created_at_human }}
                                 <p>{{ reply.body }}</p>
+                                <ul class="list-inline" v-if="$root.user.authenticated">
+                                    <li v-if="$root.user.id === reply.user_id">
+                                        <a href="#" class="text-danger" @click.prevent="deleteComment(reply.id)">Delete</a>
+                                    </li>
+                                </ul>
                             </div>
                         </li>
                     </ul>
@@ -77,6 +85,29 @@
             toggleReplyForm(commentId) {
                 this.replyBody = null;
                 this.replyFormVisible = this.replyFormVisible === commentId ? null : commentId;
+            },
+            deleteComment(commentId) {
+                if (confirm('Are you sure you want to delete this comment?')) {
+                    
+                    this.$http.delete(this.apiUrl + '/' + commentId)
+                        .then(res => {
+                            this.deleteById(commentId);
+                        });
+                }
+            },
+            deleteById(commentId) {
+                this.comments.map((comment, index) => {
+                    if (comment.id === commentId) {
+                        this.comments.splice(index, 1);
+                        return;
+                    }
+                    comment.replies.data.map((reply, replyIndex) => {
+                        if (reply.id === commentId) {
+                            this.comments[index].replies.data.splice(replyIndex, 1);
+                            return;
+                        }
+                    });
+                });
             },
             loadComments() {
                 this.$http.get(this.apiUrl).then(res => res.json())

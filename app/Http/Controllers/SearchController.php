@@ -13,7 +13,7 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         if (!$request->q) {
-            return redurect()->route('home');
+            return redirect()->route('home');
         }
 
         $channels = Channel::search($request->q)->take(2)->get();

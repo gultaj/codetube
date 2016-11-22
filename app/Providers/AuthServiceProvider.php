@@ -15,6 +15,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         \App\Models\Channel::class => \App\Policies\ChannelPolicy::class,
         \App\Models\Video::class => \App\Policies\VideoPolicy::class,
+        \App\Models\Comment::class => \App\Policies\CommentPolicy::class,
     ];
 
     /**
