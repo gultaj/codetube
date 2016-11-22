@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Video;
 use App\Http\Requests;
+use App\Http\Requests\CreateVideoCommentRequest;
 use App\Transformers\CommentTransformer;
 
 class VideoCommentsController extends Controller
@@ -15,6 +16,25 @@ class VideoCommentsController extends Controller
             fractal()
                 ->collection($video->comments()->with('user.channel', 'replies.user.channel')->latestFirst()->get())
                 ->parseIncludes(['channel', 'replies', 'replies.channel'])
+                ->transformWith(new CommentTransformer)
+                ->toArray()
+        );
+    }
+
+    public function create(CreateVideoCommentRequest $request, Video $video)
+    {
+        $this->authorize('comment', $video);
+
+        $comment = $video->comments()->create([
+            'body' => $request->body,
+            'reply_id' => $request->get('reply_id', null),
+            'user_id' => $request->user()->id,
+        ]);
+
+        return response()->json(
+            fractal()
+                ->item($comment)
+                ->parseIncludes(['channel', 'replies'])
                 ->transformWith(new CommentTransformer)
                 ->toArray()
         );

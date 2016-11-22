@@ -28,4 +28,9 @@ class VideoPolicy
 
         return $video->can_view && $video->allow_votes;
     }
+
+    public function comment(User $user, Video $video)
+    {
+        return $video->can_view && $video->allow_comments;
+    }
 }
