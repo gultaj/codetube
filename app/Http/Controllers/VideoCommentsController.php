@@ -30,11 +30,16 @@ class VideoCommentsController extends Controller
             'reply_id' => $request->get('reply_id', null),
             'user_id' => $request->user()->id,
         ]);
+        
+        $includes = ['channel'];
+        if (!$request->reply_id) {
+            $includes[] = 'replies';
+        }
 
         return response()->json(
             fractal()
                 ->item($comment)
-                ->parseIncludes(['channel', 'replies'])
+                ->parseIncludes($includes)
                 ->transformWith(new CommentTransformer)
                 ->toArray()
         );
