@@ -8,10 +8,11 @@ use App\Models\VideoView;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use App\Traits\Orderable;
 
 class Video extends Model
 {
-    use SoftDeletes, Searchable;
+    use SoftDeletes, Searchable, Orderable;
 
     protected $fillable = [
         'title', 'description', 'uid', 'video_processed', 'video_filename', 'processed', 
@@ -33,6 +34,11 @@ class Video extends Model
         return $this->morphMany(Vote::class, 'voteable');
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('reply_id');
+    }
+
     public function upVotes()
     {
         return $this->votes()->where('type', 'up');
@@ -46,11 +52,6 @@ class Video extends Model
     public function getRouteKeyName()
     {
         return 'uid';
-    }
-
-    public function scopeLatestFirst($query)
-    {
-        return $query->orderBy('created_at', 'desc');
     }
 
     public function getThumbnailAttribute($value)

@@ -17,6 +17,8 @@ Route::get('/videos/{video}/votes', 'VideoVotesController@show');
 
 Route::get('/search', 'SearchController@index')->name('search');
 
+Route::get('/videos/{video}/comments', 'VideoCommentsController@index');
+
 Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/videos', 'VideoController@index')->name('videos');
