@@ -11,7 +11,7 @@ class ChannelTransformer extends TransformerAbstract
     {
         return [
             'name' => $channel->name,
-            'slug' => $channel->slug,
+            'url' => route('channel', ['channel' => $channel->slug]),
             'image' => $channel->thumbnail_url
         ];
     }

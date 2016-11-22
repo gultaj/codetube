@@ -15,5 +15,8 @@
     "video.js": "^5.11.9",
     "vue": "^2.0.1",
     "vue-resource": "^1.0.3"
+  },
+  "dependencies": {
+    "pluralize": "^3.0.0"
   }
 }

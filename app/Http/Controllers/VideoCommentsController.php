@@ -13,7 +13,7 @@ class VideoCommentsController extends Controller
     {
         return response()->json(
             fractal()
-                ->collection($video->comments()->latestFirst()->get())
+                ->collection($video->comments()->with('user.channel', 'replies.user.channel')->latestFirst()->get())
                 ->parseIncludes(['channel', 'replies', 'replies.channel'])
                 ->transformWith(new CommentTransformer)
                 ->toArray()
