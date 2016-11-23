@@ -44,6 +44,7 @@
                                 <a href="{{ route('channel', ['channel' => $video->channel->slug]) }}" class="media-heading">
                                     {{ $video->channel->name }}
                                 </a>
+                                <subscribe-button channel-slug="{{ $video->channel->slug }}"></subscribe-button>
                             </div>
                         </div>
                     </div>
