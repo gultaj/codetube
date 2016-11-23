@@ -25,6 +25,16 @@ class Channel extends Model
         return $this->hasMany(Video::class);
     }
 
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function subscriptionCount()
+    {
+        return $this->subscriptions->count();
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

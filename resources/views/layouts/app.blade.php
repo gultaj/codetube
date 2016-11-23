@@ -37,6 +37,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
+    <script async src="/js/app.js"></script>
 </body>
 </html>
