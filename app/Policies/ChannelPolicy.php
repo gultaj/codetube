@@ -22,7 +22,7 @@ class ChannelPolicy
 
     public function subscribe(User $user, Channel $channel)
     {
-        return !$user->ownsChannel($channel);
+        return !$user->ownsChannel($channel) && !$user->isSubscribedTo($channel);
     }
 
     public function unsubscribe(User $user, Channel $channel)

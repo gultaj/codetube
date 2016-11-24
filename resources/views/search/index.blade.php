@@ -19,7 +19,9 @@
                                         </div>
                                         <div class="media-body">
                                             <a href="{{ route('channel', ['channel' => $channel->slug]) }}" class="media-heading">{{ $channel->name }}</a>
-                                            Subscription count
+                                            <ul class="list-inline">
+                                                <li>{{ $channel->subscriptionCount() }} {{ str_plural('subscriber', $channel->subscriptionCount()) }}</li>
+                                            </ul>
                                         </div>
                                     </div>
                                 @endforeach

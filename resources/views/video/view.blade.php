@@ -32,7 +32,9 @@
                             <div class="video__views">
                                 {{ $video->view_count }} {{ str_plural('view', $video->view_count) }}
                             </div>
-                            <video-voting video-uid="{{ $video->uid }}"></video-voting>
+                            @if ($video->allow_votes)
+                                <video-voting video-uid="{{ $video->uid }}"></video-voting>
+                            @endif
                         </div>
                         <div class="media">
                             <div class="media-left">
@@ -48,9 +50,9 @@
                             </div>
                         </div>
                         @if ($video->description)
-                                    <hr>
-                                    <p>{!! nl2br($video->description) !!}</p>
-                                @endif
+                            <hr>
+                            <p>{!! nl2br($video->description) !!}</p>
+                        @endif
                     </div>
                 </div>
 
