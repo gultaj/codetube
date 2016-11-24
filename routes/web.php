@@ -9,7 +9,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/channel/{channel}', 'ChannelController@view')->name('channel');
+Route::get('/channel/{channel}', 'ChannelController@show')->name('channel');
 Route::get('/videos/{video}', 'VideoController@view')->name('video');
 Route::post('/videos/{video}/view', 'VideoViewController@store');
 

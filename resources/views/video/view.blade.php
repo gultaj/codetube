@@ -47,15 +47,12 @@
                                 <subscribe-button channel-slug="{{ $video->channel->slug }}"></subscribe-button>
                             </div>
                         </div>
+                        @if ($video->description)
+                                    <hr>
+                                    <p>{!! nl2br($video->description) !!}</p>
+                                @endif
                     </div>
                 </div>
-                @if ($video->description)
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            {!! nl2br($video->description) !!}
-                        </div>
-                    </div>
-                @endif
 
                 <div class="panel panel-default">
                     <div class="panel-body">

@@ -35,6 +35,11 @@ class Channel extends Model
         return $this->subscriptions->count();
     }
 
+    public function totalVideoViews()
+    {
+        return $this->hasManyThrough(VideoView::class, Video::class)->count();
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -53,4 +58,6 @@ class Channel extends Model
     {
         return asset('/storage' . $this->thumbnail);
     }
+
+
 }
