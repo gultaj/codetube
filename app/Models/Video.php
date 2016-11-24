@@ -19,6 +19,13 @@ class Video extends Model
         'visibility', 'allow_votes', 'allow_comments', 'processed_percentage', 'thumbnail',
     ];
 
+    public function toSearchableArray()
+    {
+        $properties = $this->toArray();
+        $properties['visible'] = $this->processed && $this->is_public;
+        return $properties;
+    }
+
     public function channel()
     {
         return $this->belongsTo(Channel::class);
@@ -71,6 +78,11 @@ class Video extends Model
     public function getIsPrivateAttribute()
     {
         return $this->visibility === 'private';
+    }
+
+    public function getIsPublicAttribute()
+    {
+        return $this->visibility === 'public';
     }
 
     public function getIsOwnerAttribute()
