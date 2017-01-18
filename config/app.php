@@ -171,6 +171,7 @@ return [
         Laravel\Scout\ScoutServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Spatie\Fractal\FractalServiceProvider::class,
+        JeroenNoten\LaravelAdminLte\ServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -12,7 +12,8 @@
         "laravel/scout": "^1.1",
         "algolia/algoliasearch-client-php": "^1.11",
         "barryvdh/laravel-debugbar": "^2.3",
-        "spatie/laravel-fractal": "^2.0"
+        "spatie/laravel-fractal": "^2.0",
+        "jeroennoten/laravel-adminlte": "^1.17"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

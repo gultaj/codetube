@@ -45,3 +45,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/subscription/{channel}', 'ChannelSubscriptionController@create');
     Route::delete('/subscription/{channel}', 'ChannelSubscriptionController@delete');
 });
+
+Route::get('/admin', 'Admin\DashboardController@index');
