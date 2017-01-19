@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     public function channel()
     {
-        return $this->hasMany(Channel::class);
+        return $this->hasOne(Channel::class);
     }
 
     public function videos()
@@ -56,6 +56,6 @@ class User extends Authenticatable
 
     public function ownsChannel(Channel $channel)
     {
-        return (bool) $this->channel->where('id', $channel->id)->count();
+        return (bool) $this->channel()->where('id', $channel->id)->count();
     }
 }
