@@ -46,4 +46,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('/subscription/{channel}', 'ChannelSubscriptionController@delete');
 });
 
-Route::get('/admin', 'Admin\DashboardController@index');
+Route::group(['namespace' => 'Admin', 'prefix' => '/admin'], function() {
+
+    Route::get('/', 'DashboardController@index');
+    Route::resource('/channels', 'ChannelsController');
+});

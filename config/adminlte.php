@@ -114,6 +114,16 @@ return [
             'url'  => 'admin',
             'icon' => 'dashboard'
         ],
+        [
+            'text' => 'Channels',
+            'icon' => 'list',
+            'submenu' => [
+                [
+                    'text' => 'All channels',
+                    'url' => 'admin/channels'
+                ]
+            ]
+        ],
         'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',
