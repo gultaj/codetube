@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Channel;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChannelUpdateRequest extends FormRequest
@@ -23,8 +24,7 @@ class ChannelUpdateRequest extends FormRequest
      */
     public function rules()
     {
-
-		$channelId = \Auth::user()->channel->first()->id;
+        $channelId = $this->channel->id;
         return [
             'name' => 'required|max:255|unique:channels,name,' . $channelId,
             'slug' => 'required|max:255|alpha_num|unique:channels,slug,' . $channelId,

@@ -31,7 +31,7 @@ class ChannelsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.channels.create');
     }
 
     /**
@@ -64,6 +64,7 @@ class ChannelsController extends Controller
      */
     public function edit(Channel $channel)
     {
+        $channel->load(['videos', 'subscriptions']);
         return view('admin.channels.edit')->with([
             'channel' => $channel
         ]);
